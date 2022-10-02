@@ -1,18 +1,20 @@
-import { createStore } from 'vuex';
-import { RootState } from './state';
+import { InjectionKey } from 'vue'
+import { createStore, Store, useStore as baseUseStore } from 'vuex';
+import { RootState, startingState } from './state';
 import * as api from '../api';
+import Mutations from './mutations';
+import Actions from './actions';
+import Getters from './getters';
 
+export const key: InjectionKey<Store<RootState>> = Symbol()
 
 export const store = createStore<RootState>({
-    state: {
-        items: [],
-    },
-    mutations: {
-        addItems(state, items: api.Item[]) {
-            state.items.concat(items);
-            state.items.sort((a, b) => {
-                return a.id - b.id;
-            });
-        }
-    }
+    state: startingState,
+    mutations: Mutations,
+    actions: Actions,
+    getters: Getters,
 });
+
+export function useStore() {
+    return baseUseStore(key)
+}

@@ -4,21 +4,10 @@
 import HelloWorld from '../components/HelloWorld.vue'
 import { useRoute } from 'vue-router';
 const route = useRoute();
-const {label } = route.params;
+const { label } = route.params;
 </script>
 
 <template>
   <img alt="Vue logo" src="../assets/logo.png" />
   <HelloWorld :msg=label></HelloWorld>
 </template>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

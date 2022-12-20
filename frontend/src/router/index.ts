@@ -42,8 +42,35 @@ export const router = createRouter({
             ]
         },
         {
+            path: '/collections',
+            name: 'collections',
+            component: () => import('../views/Collections.vue'),
+            children: [
+                {
+                    path: 'new',
+                    name: 'collections.new',
+                    component: () => import('../components/Collections/New.vue')
+                },
+                {
+                    path: ':id',
+                    name: 'collections.detail',
+                    component: () => import('../components/Collections/Detail.vue')
+                },
+                {
+                    path: ':id/edit',
+                    name: 'collections.edit',
+                    component: () => import('../components/Collections/Edit.vue')
+                },
+                {
+                    path: '',
+                    name: 'collections.list',
+                    component: () => import('../components/Collections/List.vue')
+                }
+            ]
+        },
+        {
             name: '404',
-            path: '/:pathMatch(.*)',
+            path: '/:pathMatch(.*)*',
             component: () => import('../views/404.vue')
         }
     ]

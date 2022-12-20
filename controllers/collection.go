@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	db "github.com/home-first/inventory/database"
+	"github.com/rs/zerolog/log"
 	"gorm.io/gorm"
 )
 
@@ -12,6 +13,7 @@ type collectionController struct{}
 var CollectionController collectionController
 
 func (collectionController) ListCollection(ctx *gin.Context) {
+
 	var collections []db.Collection
 	result := db.DB.Model(&collections).Preload("Items").Find(&collections)
 	if result.Error != nil {
@@ -159,8 +161,10 @@ func (collectionController) UpdateCollection(ctx *gin.Context) {
 		return
 	}
 	var updateRequestBody struct {
-		Name string `json:"name"`
+		Name  string   `json:"name"`
+		Items []string `json:"items"`
 	}
+
 	err = ctx.BindJSON(&updateRequestBody)
 	if err != nil {
 		ctx.JSON(400, gin.H{
@@ -169,10 +173,33 @@ func (collectionController) UpdateCollection(ctx *gin.Context) {
 		return
 	}
 	collection.Name = updateRequestBody.Name
-	result = db.DB.Save(&collection)
-	if result.Error != nil {
+	var items []db.Item
+	result = db.DB.Find(&items, "id in (?)", updateRequestBody.Items)
+
+	if len(items) != len(updateRequestBody.Items) {
+		ctx.JSON(400, gin.H{
+			"error": "One or more items do not exist",
+		})
+		return
+	}
+
+	err = db.DB.Transaction(func(tx *gorm.DB) error {
+		result = db.DB.Save(&collection)
+		if result.Error != nil {
+			return result.Error
+		}
+		log.Debug().Interface("Items", items).Interface("param value", updateRequestBody.Items).Msg("updating collection with items")
+		err := tx.Model(&collection).Association("Items").Replace(items)
+		if err != nil {
+			log.Error().Err(err).Msg("adding items to collection")
+			return err
+		}
+		return nil
+	})
+
+	if err != nil {
 		ctx.JSON(500, gin.H{
-			"error": result.Error,
+			"error": err,
 		})
 		return
 	}

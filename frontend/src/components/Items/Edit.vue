@@ -18,16 +18,24 @@ let item = computed(() => {
     if (possibleItem) {
         return possibleItem;
     } else {
-        router.push({name: "404"})
+        router.push({
+            name: "404",
+            params: {
+                pathMatch: route.path.substring(1).split('/')
+            },
+            query: route.query,
+            hash: route.hash,
+            }
+        );
         return EmptyItem;
     }
 });
 
 const onSubmit = async () => {
-    const updateItem = await api.updateItem(item.value)
+    const updateCollection = await api.updateCollection(item.value)
 
     store.dispatch('addItem', item);
-    router.push({name: 'items.detail', params: {id: item.value.id}});
+    router.push({name: 'item.detail', params: {id: item.value.id}});
 };
 </script>
 

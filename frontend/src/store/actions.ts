@@ -1,6 +1,6 @@
 import { ActionTree } from "vuex";
 import { RootState } from "./state";
-import { api } from "../api";
+import { api, Collection } from "../api";
 
 
 const Actions: ActionTree<RootState, RootState> = {
@@ -32,6 +32,11 @@ const Actions: ActionTree<RootState, RootState> = {
             console.log(error);
         }
         );
+    },
+    updateCollection({ commit}, collection: Collection) {
+        api.updateCollection(collection).then(collection => {
+            commit("addCollections", [collection]);
+        })
     }
 }
 

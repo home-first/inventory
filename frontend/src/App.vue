@@ -11,17 +11,25 @@ const items: MenuItem[] = [
     command: () => {
       router.push({ name: 'items.list'})
     },
-  }
+  },
+  {
+    label: 'Collections',
+    command: () => {
+      router.push({ name: 'collections.list'})
+    },
+  },
 ]
 </script>
 
 <template>
-  <Menubar :model="items">
-    <template #end>
-      <InputText placeholder="Search" type="text" />
-    </template>
-  </Menubar>
-  <router-view />
+  <div>
+    <Menubar :model="items">
+      <template #end>
+        <InputText placeholder="Search" type="text" />
+      </template>
+    </Menubar>
+    <router-view />
+  </div>
 </template>
 
 <style>

@@ -14,6 +14,7 @@ var ItemController itemController
 type ItemMinimal struct {
 	ID          string   `json:"id"`
 	Name        string   `json:"name"`
+	Description string   `json:"description"`
 	Collections []string `json:"collections"`
 }
 
@@ -46,6 +47,7 @@ func (itemController) ListItems(ctx *gin.Context) {
 		minimalItems[i] = ItemMinimal{
 			ID:          item.ID.String(),
 			Name:        item.Name,
+			Description: item.Description,
 			Collections: collectionIds,
 		}
 	}

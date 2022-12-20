@@ -1,24 +1,21 @@
 {
-  "name": "home-inventory-frontend",
+  "name": "frontend",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "primeicons": "^5.0.0",
-    "primevue": "^3.15.0",
-    "vue": "^3.2.25",
-    "vue-router": "^4.1.2",
-    "vuex": "^4.0.2"
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.3.3",
-    "typescript": "^4.5.4",
-    "unplugin-vue-router": "^0.0.21",
-    "vite": "^2.9.9",
-    "vue-tsc": "^0.34.7"
+    "@sveltejs/vite-plugin-svelte": "^2.0.0",
+    "@tsconfig/svelte": "^3.0.0",
+    "svelte": "^3.54.0",
+    "svelte-check": "^2.10.0",
+    "tslib": "^2.4.1",
+    "typescript": "^4.9.3",
+    "vite": "^4.0.0"
   }
 }

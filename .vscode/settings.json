@@ -1,11 +1,7 @@
 {
     "cSpell.words": [
-        "cleanenv",
-        "gorm",
-        "Minimizable",
-        "pocketbase",
-        "primevue",
-        "Vant",
-        "Vuestic"
+        "Automigrate",
+        "migratecmd",
+        "pocketbase"
     ]
 }

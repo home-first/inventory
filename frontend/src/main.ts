@@ -1,16 +1,8 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import { router } from './router'
-import { store, key } from './store'
-import PrimeVue from 'primevue/config';
-import 'primevue/resources/primevue.min.css';
-import 'primevue/resources/themes/saga-blue/theme.css';
-import 'primeicons/primeicons.css';
+import './app.css'
+import App from './App.svelte'
 
+const app = new App({
+  target: document.getElementById('app'),
+})
 
-
-createApp(App)
-    .use(router)
-    .use(store, key)
-    .use(PrimeVue)
-    .mount('#app')
+export default app

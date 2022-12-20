@@ -1,20 +1,17 @@
 import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue';
-
+import { svelte } from '@sveltejs/vite-plugin-svelte'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-  ],
+  plugins: [svelte()],
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8125',
+        target: 'http://127.0.0.1:8090',
         changeOrigin: true,
       },
-      "/l/": {
-        target: 'http://localhost:8125',
+      "/_/": {
+        target: 'http://127.0.0.1:8090',
         changeOrigin: true,
       },
     }
